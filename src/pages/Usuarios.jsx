@@ -10,7 +10,7 @@ function Usuarios() {
     const token = localStorage.getItem("token"); // 👈 Pega o token salvo no login
 
     axios
-      .get("http://localhost:8601/api/usuarios", {
+      .get("http://localhost:8601/usuarios/listar", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -45,33 +45,15 @@ function Usuarios() {
       selector: (row) => row.nomeUser,
       sortable: true,
     },
-    {
-      name: "Perfis",
-      cell: (row) => (
-        <div className="relative group">
-          <button className="bg-blue-500 text-white px-3 py-1 rounded">
-            Ver Perfis
-          </button>
-          <div className="absolute hidden group-hover:block bg-white border rounded shadow-md p-2 z-10 w-40">
-            {row.perfis && row.perfis.length > 0 ? (
-              <ul>
-                {row.perfis.map((perfil, index) => (
-                  <li key={index} className="text-sm text-gray-700">
-                    {perfil}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <span className="text-sm text-gray-500">Sem perfis</span>
-            )}
-          </div>
-        </div>
-      ),
-    },
-    {
-      name: "Ativo",
-      selector: (row) => (row.ativo ? "Sim" : "Não"),
+    { 
+      name: 'Status',
+      selector: row => (row.ativo ? 'Ativo' : 'Inativo'),
       sortable: true,
+      cell: row => (
+        <span className={`badge bg-${row.ativo ? 'success' : 'secondary'}`}>
+          {row.ativo ? 'Ativo' : 'Inativo'}
+        </span>
+      )
     },
   ];
 

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../../config/api";
+import { useNavigate } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 function Login({ onLogin }) {
@@ -7,24 +8,26 @@ function Login({ onLogin }) {
   const [senha, setSenha] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
     try {
-      const response = await axios.post("http://localhost:8601/usuarios/login", {
+      const response = await api.post("http://localhost:8601/usuarios/login", {
         nomeUser,
         senha,
       });
 
-      // 👇 salva token no localStorage
+      // supondo que a API retorna { token: "..." }
       localStorage.setItem("token", response.data.token);
 
-      if (onLogin) onLogin(); // callback pra redirecionar
+      onLogin(); // avisa o App que o usuário autenticou
+      navigate("/"); // redireciona para home (pode mudar se quiser)
     } catch (err) {
-      console.error("Erro ao fazer login:", err);
+      console.error("Erro ao logar:", err);
       setError("Usuário ou senha inválidos.");
     } finally {
       setLoading(false);
@@ -38,7 +41,7 @@ function Login({ onLogin }) {
 
         {error && <div className="alert alert-danger">{error}</div>}
 
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label className="form-label">Usuário</label>
             <input
@@ -53,7 +56,7 @@ function Login({ onLogin }) {
           <div className="mb-3">
             <label className="form-label">Senha</label>
             <input
-              type="senha"
+              type="password"
               className="form-control"
               value={senha}
               onChange={(e) => setSenha(e.target.value)}

@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from "react";
 import DataTable from "react-data-table-component";
-import axios from "axios";
+import api from "../../config/api";
+import { Link } from "react-router-dom"; // 👈 Import necessário
 
-function Usuarios() {
+function ListaUsuarios() {
   const [usuarios, setUsuarios] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("token"); // 👈 Pega o token salvo no login
 
-    axios
+    api
       .get("http://localhost:8601/usuarios/listar", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
-        setUsuarios(response.data); // 👈 Ajuste se a sua API retornar algo diferente
+        setUsuarios(response.data);
       })
       .catch((error) => {
         console.error("Erro ao buscar usuários:", error);
@@ -59,7 +60,16 @@ function Usuarios() {
 
   return (
     <div className="p-6">
-      <h2 className="text-xl font-bold mb-4">Lista de Usuários</h2>
+      <div className="mb-4" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <h2 className="text-xl font-bold">Lista de Usuários</h2>
+        <Link
+          to="/controle-de-usuarios/usuarios/cadastrar" // 👈 Rota da página de cadastro
+          className="bg-blue-500 btn btn-primary px-4 py-2 rounded"
+        >
+          Cadastrar Usuário
+        </Link>
+      </div>
+
       <DataTable
         columns={colunas}
         data={usuarios}
@@ -70,4 +80,4 @@ function Usuarios() {
   );
 }
 
-export default Usuarios;
+export default ListaUsuarios;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import DataTable from "react-data-table-component";
-import axios from "axios";
+import api from "../config/api";
 
 function Permissoes() {
   const [permissoes, setPermissoes] = useState([]);
@@ -9,7 +9,7 @@ function Permissoes() {
   useEffect(() => {
     const token = localStorage.getItem("token"); // 👈 Pega o token salvo no login
 
-    axios
+    api
       .get("http://localhost:8601/permissoes/listar", {
         headers: {
           Authorization: `Bearer ${token}`,

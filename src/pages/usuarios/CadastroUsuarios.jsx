@@ -6,7 +6,7 @@ function CadastroUsuario() {
   const [nomeAmigavel, setNomeAmigavel] = useState("");
   const [nomeUser, setNomeUser] = useState("");
   const [senha, setSenha] = useState("");
-  const [perfis, setPerfis] = useState([]);
+  const [perfisUsuario, setPerfis] = useState([]);
   const [todosPerfis, setTodosPerfis] = useState([]);
   const [loading, setLoading] = useState(false);
   const [mensagem, setMensagem] = useState("");
@@ -29,10 +29,10 @@ function CadastroUsuario() {
   }, [token]);
 
   const handleCheckboxChange = (perfil) => {
-    if (perfis.includes(perfil)) {
-      setPerfis(perfis.filter((p) => p !== perfil));
+    if (perfisUsuario.includes(perfil)) {
+      setPerfis(perfisUsuario.filter((p) => p !== perfil));
     } else {
-      setPerfis([...perfis, perfil]);
+      setPerfis([...perfisUsuario, perfil]);
     }
   };
 
@@ -45,7 +45,7 @@ function CadastroUsuario() {
         var usuario = {nomeCompleto, nomeAmigavel, nomeUser, senha};
       await api.post(
         "http://localhost:8601/usuarios/cadastrar",
-        { usuario, perfis },
+        { usuario, perfisUsuario },
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -131,7 +131,7 @@ function CadastroUsuario() {
                         type="checkbox"
                         className="form-check-input"
                         id={`perfil-${perfil.id}`}
-                        checked={perfis.includes(perfil)}
+                        checked={perfisUsuario.includes(perfil)}
                         onChange={() => handleCheckboxChange(perfil)}
                       />
                       <label

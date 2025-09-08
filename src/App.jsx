@@ -12,6 +12,7 @@ import Permissoes from './pages/Permissoes';
 import Login from './pages/login/Login';
 import CadastroUsuario from "./pages/usuarios/CadastroUsuarios";
 import { useAxiosInterceptor } from "./config/useAxiosInterceptor";
+import EditarUsuario from "./pages/usuarios/EdicaoUsuarios";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -38,6 +39,7 @@ const App = () => {
                 <Route path="/about" element={<About />} />
                 <Route path="/controle-de-usuarios/usuarios" element={<ListaUsuarios />} />
                 <Route path="/controle-de-usuarios/usuarios/cadastrar" element={<CadastroUsuario />} />
+                <Route path="/controle-de-usuarios/usuarios/:id/editar" element={<EditarUsuario />} />
                 <Route path="/controle-de-usuarios/perfis" element={<Perfis />} />
                 <Route path="/controle-de-usuarios/permissoes" element={<Permissoes />} />
               </Routes>

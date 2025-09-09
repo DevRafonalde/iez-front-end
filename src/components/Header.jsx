@@ -63,18 +63,18 @@ const Header = () => {
           </li>
 
           <li className="nav-item">
-            <NavLink to="/pricing" className={getNavLinkClass}>
-              Pricing
+            <NavLink to="/clientes" className={getNavLinkClass}>
+              Clientes
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink to="/faqs" className={getNavLinkClass}>
-              FAQs
+            <NavLink to="/produtos" className={getNavLinkClass}>
+              Produtos
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink to="/about" className={getNavLinkClass}>
-              About
+            <NavLink to="/vendas" className={getNavLinkClass}>
+              Vendas
             </NavLink>
           </li>
         </ul>
